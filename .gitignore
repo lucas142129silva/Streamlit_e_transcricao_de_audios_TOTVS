@@ -2,7 +2,7 @@
 
 /.kaggle/
 
-/.streamlit/
+/.streamlit/secrets.toml
 
 /venv/
 
