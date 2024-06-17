@@ -17,7 +17,7 @@ def nav(current_page=page_list[0]):
     with st.sidebar:
         st.set_page_config(page_title="EchoShift", page_icon="iphone", layout="centered", initial_sidebar_state="auto", menu_items=None)
 
-        st.sidebar.image("logologo.png", use_column_width=True)
+        st.sidebar.image("Logologo.png", use_column_width=True)
         p = option_menu("", page_list, 
             default_index=page_list.index(current_page), 
             orientation="vertical",
