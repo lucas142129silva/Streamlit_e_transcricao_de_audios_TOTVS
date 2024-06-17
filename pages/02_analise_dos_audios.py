@@ -1,6 +1,5 @@
 import pandas as pd
 import nltk
-nltk.download("punkt")
 from nltk.tokenize import word_tokenize
 import re
 import unidecode
@@ -14,6 +13,10 @@ import json
 import time
 import navbar
 
+try:
+	nltk.download("punkt")
+except BrokenPipeError:
+	pass
 
 navbar.nav('Análises')
 st.title("Análises dos áudios")

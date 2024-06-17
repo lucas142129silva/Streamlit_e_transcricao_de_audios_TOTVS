@@ -73,6 +73,7 @@ if uploaded_file is not None:
 	repo.create_file(git_file, "committing files", audio_bytes, branch="main")
 	st.text(git_file + ' CREATED')
 
+
 	rodar_notebook_kaggle()
 
 	st.text("Carregando... Sua transcrição já está processando!")
