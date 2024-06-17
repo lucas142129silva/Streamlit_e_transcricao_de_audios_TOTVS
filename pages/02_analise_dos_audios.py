@@ -168,6 +168,7 @@ time.sleep(2)
 st.markdown("\n#### Frequência de palavras de quem mediu:")
 gerar_wordcloud(possuem_nps["texto final"].tolist())
 
+time.sleep(2)
 
 # Notas médias com base nos textos
 st.markdown("### Notas médias encontradas nos textos:")
@@ -178,10 +179,12 @@ st.scatter_chart(possuem_nps, x="nota média", y="pos", color="#025EF1")
 st.text("Há uma correlação de %.2f%% entre nota média e índice de positividade encontrado" %
         (possuem_nps[["nota média", "pos"]].corr().iloc[0]["pos"] * 100))
 
+time.sleep(2)
+
 st.markdown("#### Wordcloud com notas médias menores que 6:")
 gerar_wordcloud(possuem_nps[possuem_nps["nota média"]<6]["texto final"].tolist())
 
-time.sleep(1)
+time.sleep(2)
 
 st.markdown("#### Wordcloud com notas médias maiores que 9:")
 gerar_wordcloud(possuem_nps[possuem_nps["nota média"]>9]["texto final"].tolist())

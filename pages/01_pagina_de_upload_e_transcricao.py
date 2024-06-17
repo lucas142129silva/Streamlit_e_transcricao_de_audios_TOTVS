@@ -2,6 +2,7 @@ import streamlit as st
 import navbar
 from github import Github
 import time, os, json, shutil, subprocess
+import github
 
 navbar.nav('Transcrição')
 
@@ -70,9 +71,13 @@ if uploaded_file is not None:
 
 	# Enviar arquivo para github
 	git_file = "EntradasAudios/" + id_entrada_audio + "_" + uploaded_file.name.split(".")[0] + "_audio." + uploaded_file.name.split(".")[-1]
-	repo.create_file(git_file, "committing files", audio_bytes, branch="main")
-	st.text(git_file + ' CREATED')
 
+	# Se rodar dois sites ao mesmo tempo, ele faz o rerun da página para fazer o upload novamente e não dar erro de request
+	try:
+		repo.create_file(git_file, "committing files", audio_bytes, branch="main")
+		st.text(git_file + ' CREATED')
+	except github.GithubException:
+		st.rerun()
 
 	rodar_notebook_kaggle()
 
