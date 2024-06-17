@@ -68,7 +68,7 @@ if uploaded_file is not None:
 	audio_bytes = uploaded_file.read()
 
 	# Enviar arquivo para github
-	git_file = "EntradasAudios/" + id_entrada_audio + "_" + uploaded_file.name.split(".")[0] + "_audio" + uploaded_file.name.split(".")[-1]
+	git_file = "EntradasAudios/" + id_entrada_audio + "_" + uploaded_file.name.split(".")[0] + "_audio." + uploaded_file.name.split(".")[-1]
 	repo.create_file(git_file, "committing files", audio_bytes, branch="main")
 	st.text(git_file + ' CREATED')
 
