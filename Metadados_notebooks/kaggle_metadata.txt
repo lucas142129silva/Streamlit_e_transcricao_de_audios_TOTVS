@@ -1,0 +1,1 @@
+Local para armazenar temporariamente arquivos de metadados de kernels
