@@ -46,7 +46,8 @@ def rodar_notebook_kaggle():
 	response = subprocess.run(["kaggle", "kernels", "push", "-p", krnl_mtdt_dir],
 	                          capture_output=True)
 
-	shutil.rmtree("./Metadados_notebooks/" + ntbk_name)
+	if os.path.exists("./Metadados_notebooks/" + ntbk_name):
+		shutil.rmtree("./Metadados_notebooks/" + ntbk_name)
 
 	time.sleep(5)
 
