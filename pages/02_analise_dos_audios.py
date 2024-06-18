@@ -147,8 +147,8 @@ for idx, row in dados.iterrows():
 dados = dados.join(resultados_sentimento)
 
 st.markdown("\n### Análise de sentimento")
-st.text(f"% de áudios com algum viés positivo: {(dados.query('pos>0.05').shape[0] / dados.shape[0]) * 100:.2f}")
-st.text(f"% de áudios com algum viés negativo: {(dados.query('neg>0.05').shape[0] / dados.shape[0]) * 100:.2f}")
+st.text(f"% de áudios com algum viés positivo: {(dados.query('pos>0.05').shape[0] / dados.shape[0]) * 100:.2f}%")
+st.text(f"% de áudios com algum viés negativo: {(dados.query('neg>0.05').shape[0] / dados.shape[0]) * 100:.2f}%")
 
 
 # Comparando quem mediu e quem não mediu NPS

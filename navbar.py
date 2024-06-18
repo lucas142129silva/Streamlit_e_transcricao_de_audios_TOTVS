@@ -6,7 +6,8 @@ from streamlit_option_menu import option_menu
 # Define the pages and their file paths
 pages = {'Home':'home.py',
          'Transcrição':'pages/01_pagina_de_upload_e_transcricao.py',
-         'Análises':'pages/02_analise_dos_audios.py'}
+         'Análises':'pages/02_analise_dos_audios.py',
+         'Operação':'pages/03_analise_de_operacao.py'}
 
 
 
@@ -21,7 +22,7 @@ def nav(current_page=page_list[0]):
         p = option_menu("", page_list, 
             default_index=page_list.index(current_page), 
             orientation="vertical",
-            icons=["house", "telephone", "thermometer"] ,
+            icons=["house", "telephone", "thermometer", "gear"] ,
             styles={
                 "container": {"padding": "0!important", "background-color": "#beceea"},
                 "icon": { "font-size": "25px"}, 
