@@ -65,7 +65,7 @@ st.bar_chart(dados_semana_tempo_exec, x="Dia", y="Tempo execução", color="#025
 
 st.markdown("\n\n### Média de áudios transcritos por dia:")
 st.markdown("Média de áudios transcritos por dia: **%.0f**" % (dados_semana_total_audio["Total de áudios"].mean()))
-st.bar_chart(dados_semana_acuracia, x="Dia", y="Acurácia de transcrição", color="#025EF1")
+st.bar_chart(dados_semana_total_audio, x="Dia", y="Total de áudios", color="#025EF1")
 
 tempo_medio_por_audio = dados_semana_tempo_exec["Tempo execução"].mean() / dados_semana_total_audio["Total de áudios"].mean()
 
