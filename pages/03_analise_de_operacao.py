@@ -38,6 +38,10 @@ dados_semana_tempo_exec = pd.DataFrame(
 
 
 st.title("Análise da operação\n")
+st.markdown("\nNesta aba, são apresentados indicadores da pipeline de transcrição de áudios que rodam diariamente."
+            " O objetivo é garantir a integridade da execução com o acompanhamento de acurácia do modelo de transcrição,"
+            " tempo de execução médio e quantidade de áudios que foram transcritos e carregados para o banco de dados.\n\n")
+
 start_date, end_date = st.select_slider("Selecione o intervalo de data:",
                                         value=(1, 25), options=list(range(1, 26)),)
 

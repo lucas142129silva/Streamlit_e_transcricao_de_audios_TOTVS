@@ -20,8 +20,11 @@ except BrokenPipeError:
 
 navbar.nav('Análises')
 st.title("Análises dos áudios")
+st.markdown("\nNesta aba, realizamos análises com dados transcritos pela pipeline de transcrição que executa diariamente. "
+            "O seu objetivo é proporcionar insights de sentimentos, nota média, índice de sucesso de mensuração do NPS e "
+            "palavras mais usadas.\n\n")
 
-st.markdown("Análises de uma amostra de 80 áudios, com um **WER de 91.2%**!")
+st.markdown("Essas análises foram realizadas baseadas em uma amostra de 80 áudios, com um **WER de 91.2%**!")
 
 sentiment = SentimentIntensityAnalyzer()
 
@@ -114,7 +117,6 @@ tokens = word_tokenize(todos_os_textos)
 filtered_tokens = remover_stop_words(tokens)
 
 # Wordcloud com todos os áudios
-#st.title("Análises dos áudios")
 st.markdown("### Wordcloud: frequência de palavras")
 gerar_wordcloud(filtered_tokens)
 

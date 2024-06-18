@@ -61,8 +61,10 @@ id_entrada_audio = str(int(contents[0].download_url.split("/")[-1].split("_")[0]
 
 # Página
 st.title("Transcrição")
+st.markdown("\nNesta aba, há uma ferramenta de transcrição conectada por API para transcrever o seu áudio em MP3 ou WAV "
+            "em texto em questão de minutos! Use para transcrever individualmente, realizar testes e verificar.\n\n")
 
-uploaded_file = st.file_uploader("Escolha um audio",
+uploaded_file = st.file_uploader("Escolha um áudio",
                                  type=[".wav", ".mp3"],
                                  accept_multiple_files=False)
 
@@ -105,4 +107,6 @@ if uploaded_file is not None:
 	tempo_total = time.time() - inicio
 
 	st.text("Transcrição efetuada com sucesso em %d minutos e %d segundos!" % (tempo_total // 60, tempo_total % 60))
+
+	st.markdown("\n#### Sua transcrição está aqui:\n\n\n")
 	st.markdown(transcricao)
