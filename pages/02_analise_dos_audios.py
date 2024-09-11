@@ -159,7 +159,7 @@ dados["tem palavra nps"] = dados["texto tratado"].str.contains("0 a 10").astype(
 nao_mediram_nps = dados[dados["tem palavra nps"]==0].copy()
 possuem_nps = dados[dados["tem palavra nps"]==1].copy()
 
-st.text("%.2f%% dos dados não mensuraram NPS" % (62.50))
+st.text("%.2f%% dos dados mensuraram NPS" % (62.50))
 
 # Wordcloud diferenciando não mediu x mediu
 st.markdown("\n#### Frequência de palavras de quem não mediu:")
