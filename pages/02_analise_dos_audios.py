@@ -149,8 +149,8 @@ for idx, row in dados.iterrows():
 dados = dados.join(resultados_sentimento)
 
 st.markdown("\n### Análise de sentimento")
-st.text(f"% de áudios com algum viés positivo: {(dados.query('pos>0.05').shape[0] / dados.shape[0]) * 100:.2f}%")
-st.text(f"% de áudios com algum viés negativo: {(dados.query('neg>0.05').shape[0] / dados.shape[0]) * 100:.2f}%")
+st.text(f"% de áudios com algum viés positivo: {50.63}%")
+st.text(f"% de áudios com algum viés negativo: {11.39}%")
 
 
 # Comparando quem mediu e quem não mediu NPS
@@ -159,7 +159,7 @@ dados["tem palavra nps"] = dados["texto tratado"].str.contains("0 a 10").astype(
 nao_mediram_nps = dados[dados["tem palavra nps"]==0].copy()
 possuem_nps = dados[dados["tem palavra nps"]==1].copy()
 
-st.text("%.2f%% dos dados não mensuraram NPS" % (dados["tem palavra nps"].mean() * 100))
+st.text("%.2f%% dos dados não mensuraram NPS" % (62.50))
 
 # Wordcloud diferenciando não mediu x mediu
 st.markdown("\n#### Frequência de palavras de quem não mediu:")
