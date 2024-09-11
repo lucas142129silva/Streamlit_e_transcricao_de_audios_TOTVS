@@ -24,7 +24,7 @@ st.markdown("\nNesta aba, realizamos análises com dados transcritos pela pipeli
             "O seu objetivo é proporcionar insights de sentimentos, nota média, índice de sucesso de mensuração do NPS e "
             "palavras mais usadas.\n\n")
 
-st.markdown("Essas análises foram realizadas baseadas em uma amostra de 80 áudios, com um **WER de 91.2%**!")
+st.markdown("Essas análises foram realizadas baseadas em uma amostra de 80 áudios, com um **WER de 97.6%**!")
 
 sentiment = SentimentIntensityAnalyzer()
 
