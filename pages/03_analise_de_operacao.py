@@ -46,29 +46,42 @@ st.markdown("\nNesta aba, são apresentados indicadores da pipeline de transcri�
 start_date, end_date = st.select_slider("Selecione o intervalo de data:",
                                         value=(1, 25), options=list(range(1, 26)),)
 
-
+# Filtro de data
 if start_date is not None and end_date is not None:
 	# Filtrar com o slider
 	dados_semana_tempo_exec = dados_semana_tempo_exec[dados_semana_tempo_exec["Dia"].between(start_date, end_date)]
 	dados_semana_total_audio = dados_semana_total_audio[dados_semana_total_audio["Dia"].between(start_date, end_date)]
 	dados_semana_acuracia = dados_semana_acuracia[dados_semana_acuracia["Dia"].between(start_date, end_date)]
 
+tempo_medio_por_audio = dados_semana_tempo_exec["Tempo execução"].mean() / dados_semana_total_audio["Total de áudios"].mean()
+
+# Principais KPIs
+col1, col2, col3, col4 = st.columns(4)
+col1.metric("WER", "%.2f%%" % (dados_semana_acuracia["Acurácia de transcrição"].mean()*100))
+col2.metric("Tempo de execução", "%dh%dm" %
+            (dados_semana_tempo_exec["Tempo execução"].mean() // 60,
+             dados_semana_tempo_exec["Tempo execução"].mean() % 60))
+col3.metric("Transcrições por dia", "%.0f" % (dados_semana_total_audio["Total de áudios"].mean()))
+col4.metric("Tempo médio por áudio", "%dm%ds" %
+            (tempo_medio_por_audio // 1, (tempo_medio_por_audio % 1) * 60))
+
+st.markdown("----")
+
 st.markdown("### Média de WER (acurácia da transcrição):")
 st.markdown("Média de WER: **%.2f%%**" % (dados_semana_acuracia["Acurácia de transcrição"].mean()*100))
 st.line_chart(dados_semana_acuracia, x="Dia", y="Acurácia de transcrição", color="#025EF1")
-
+st.markdown("----")
 
 st.markdown("\n\n### Média de tempo de execução da carga diária:")
 st.markdown("Média de tempo de execução: **%d horas e %d minutos**" %
             (dados_semana_tempo_exec["Tempo execução"].mean() // 60, dados_semana_tempo_exec["Tempo execução"].mean() % 60))
 st.bar_chart(dados_semana_tempo_exec, x="Dia", y="Tempo execução", color="#025EF1")
-
+st.markdown("----")
 
 st.markdown("\n\n### Média de áudios transcritos por dia:")
 st.markdown("Média de áudios transcritos por dia: **%.0f**" % (dados_semana_total_audio["Total de áudios"].mean()))
 st.bar_chart(dados_semana_total_audio, x="Dia", y="Total de áudios", color="#025EF1")
-
-tempo_medio_por_audio = dados_semana_tempo_exec["Tempo execução"].mean() / dados_semana_total_audio["Total de áudios"].mean()
+st.markdown("----")
 
 st.markdown("\nO tempo médio por áudio transcrito é de **%d minutos e %d segundos**" %
             (tempo_medio_por_audio // 1, (tempo_medio_por_audio % 1) * 60))
