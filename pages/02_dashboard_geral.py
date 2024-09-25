@@ -21,7 +21,12 @@ except BrokenPipeError:
 
 navbar.nav('Dashboard Geral')
 st.title("Dashboard de Acompanhamento")
-st.markdown("\nNesta aba, temos o Dashboard para Acompanhamento das principais métricas.\n\n")
+st.markdown(f"\nNesta aba, temos o Dashboard para Acompanhamento das principais métricas. Se quiser se aprofundar para análises"
+            f"dos dados transcritos ou análise das operações:\n")
+st.page_link('pages/03_analise_dos_audios.py', label='**Análise dos áudios**', icon="🔎")
+st.page_link('pages/04_analise_de_operacao.py', label='**Análise da operação**', icon="⚙️")
+
+st.markdown("\n\n----")
 
 
 st.markdown("\nMétricas de Operação.\n\n")
