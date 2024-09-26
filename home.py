@@ -4,7 +4,6 @@ import navbar
 # Adiciona a imagem de fundo na barra lateral
 # st.sidebar.image("Logologo.png", use_column_width=True)
 
-
 # Display the menu
 navbar.nav('Home')
 

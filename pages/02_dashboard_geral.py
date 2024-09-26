@@ -20,15 +20,7 @@ except BrokenPipeError:
 
 navbar.nav('Dashboard Geral')
 st.title("Dashboard de Acompanhamento")
-st.markdown(f"\nNesta aba, temos o Dashboard para Acompanhamento das principais métricas. Se quiser se aprofundar para análises"
-            f"dos dados transcritos ou análise das operações:\n")
-st.page_link('pages/03_analise_dos_audios.py', label='**Análise dos áudios**', icon="🔎")
-st.page_link('pages/04_analise_de_operacao.py', label='**Análise da operação**', icon="⚙️")
 
-st.markdown("\n\n----")
-
-
-st.markdown("\nMétricas de Operação.\n\n")
 
 # Sucesso de transcrição
 dados_semana_acuracia = pd.DataFrame(
@@ -61,9 +53,14 @@ dados_semana_tempo_exec = pd.DataFrame(
 	}
 
 )
+tempo_medio_por_audio = dados_semana_tempo_exec["Tempo execução"].mean() / dados_semana_total_audio["Total de áudios"].mean()
 
+# Colunas de KPIs
+c1, c2, c3, c4, c5, c6, c7, c8 = st.columns(8)
+st.markdown("----")
 start_date, end_date = st.select_slider("Selecione o intervalo de data:",
                                         value=(1, 25), options=list(range(1, 26)),)
+st.markdown("\n\n----")
 
 # Filtro de data
 if start_date is not None and end_date is not None:
@@ -72,23 +69,35 @@ if start_date is not None and end_date is not None:
 	dados_semana_total_audio = dados_semana_total_audio[dados_semana_total_audio["Dia"].between(start_date, end_date)]
 	dados_semana_acuracia = dados_semana_acuracia[dados_semana_acuracia["Dia"].between(start_date, end_date)]
 
-tempo_medio_por_audio = dados_semana_tempo_exec["Tempo execução"].mean() / dados_semana_total_audio["Total de áudios"].mean()
 
-# Principais KPIs
-col1, col2, col3, col4 = st.columns(4)
-col1.metric("WER", "%.2f%%" % (dados_semana_acuracia["Acurácia de transcrição"].mean()*100))
-col2.metric("Tempo de execução", "%dh%dm" %
+# Escreve KPIs
+with c1:
+	st.page_link('pages/03_analise_dos_audios.py', label='**Análise dos áudios**', icon="🔎")
+	st.page_link('pages/04_analise_de_operacao.py', label='**Análise da operação**', icon="⚙️")
+
+# KPIs
+c2.metric("WER", "%.2f%%" % (dados_semana_acuracia["Acurácia de transcrição"].mean()*100))
+c3.metric("Tempo de execução", "%dh%dm" %
             (dados_semana_tempo_exec["Tempo execução"].mean() // 60,
              dados_semana_tempo_exec["Tempo execução"].mean() % 60))
-col3.metric("Transcrições por dia", "%.0f" % (dados_semana_total_audio["Total de áudios"].mean()))
-col4.metric("Tempo médio por áudio", "%dm%ds" %
+c4.metric("Transcrições por dia", "%.0f" % (dados_semana_total_audio["Total de áudios"].mean()))
+c5.metric("Tempo médio por áudio", "%dm%ds" %
             (tempo_medio_por_audio // 1, (tempo_medio_por_audio % 1) * 60))
+c6.metric("Positividade", "50.63%")
+c7.metric("Negatividade", "11.39%")
+c8.metric("Mensuração NPS", "62.5%")
+
+
+# Segunda camada de colunas
+z1, z2, z3 = st.columns(3)
+with z1:
+	st.markdown("\n\n###### Tempo de execução da carga diária:")
+	st.line_chart(dados_semana_tempo_exec, x="Dia", y="Tempo execução", color="#025EF1")
+	st.markdown("\n\n###### Total de áudios transcritos:")
+	st.bar_chart(dados_semana_total_audio, x="Dia", y="Total de áudios", color="#025EF1")
 
 st.markdown("----")
-#st.markdown("Essas análises foram realizadas baseadas em uma amostra de 80 áudios, com um **WER de 97.6%**!")
 
-
-st.markdown("\nAnálises das Ligações.\n\n")
 
 sentiment = SentimentIntensityAnalyzer()
 
@@ -197,9 +206,6 @@ for idx, row in dados.iterrows():
 
 dados = dados.join(resultados_sentimento)
 
-st.markdown("\n### Análise de sentimento")
-st.text(f"% de áudios com algum viés positivo: {50.63}%")
-st.text(f"% de áudios com algum viés negativo: {11.39}%")
 
 
 # Comparando quem mediu e quem não mediu NPS
@@ -208,32 +214,27 @@ dados["tem palavra nps"] = dados["texto tratado"].str.contains("0 a 10").astype(
 nao_mediram_nps = dados[dados["tem palavra nps"]==0].copy()
 possuem_nps = dados[dados["tem palavra nps"]==1].copy()
 
-# Wordcloud diferenciando não mediu x mediu
-st.markdown("\n#### Frequência de palavras de quem não mediu:")
-gerar_wordcloud(nao_mediram_nps["texto final"].tolist())
+with z2:
+	# Wordcloud diferenciando não mediu x mediu
+	st.markdown("\n###### Frequência de palavras de quem não mediu NPS:")
+	gerar_wordcloud(nao_mediram_nps["texto final"].tolist())
 
-time.sleep(2)
+	time.sleep(1.5)
 
-st.markdown("\n#### Frequência de palavras de quem mediu:")
-gerar_wordcloud(possuem_nps["texto final"].tolist())
+	st.markdown("\n\n\n###### Frequência de palavras de quem mediu NPS:")
+	gerar_wordcloud(possuem_nps["texto final"].tolist())
 
-time.sleep(2)
 
 # Notas médias com base nos textos
-st.markdown("### Notas médias encontradas nos textos:")
 possuem_nps["nota média"] = possuem_nps["texto tratado"].apply(retornas_notas_de_texto)
 
-st.scatter_chart(possuem_nps, x="nota média", y="pos", color="#025EF1")
+time.sleep(1.5)
 
-st.text("Há uma correlação de %.2f%% entre nota média e índice de positividade encontrado" %
-        (possuem_nps[["nota média", "pos"]].corr().iloc[0]["pos"] * 100))
+with z3:
+	st.markdown("\n###### Wordcloud com áudios negatvios:")
+	gerar_wordcloud(possuem_nps[possuem_nps["nota média"]<6]["texto final"].tolist())
 
-time.sleep(2)
+	time.sleep(1.5)
 
-st.markdown("#### Wordcloud com notas médias menores que 6:")
-gerar_wordcloud(possuem_nps[possuem_nps["nota média"]<6]["texto final"].tolist())
-
-time.sleep(2)
-
-st.markdown("#### Wordcloud com notas médias maiores que 9:")
-gerar_wordcloud(possuem_nps[possuem_nps["nota média"]>9]["texto final"].tolist())
+	st.markdown("\n###### Wordcloud com áudios positivos:")
+	gerar_wordcloud(possuem_nps[possuem_nps["nota média"]>9]["texto final"].tolist())

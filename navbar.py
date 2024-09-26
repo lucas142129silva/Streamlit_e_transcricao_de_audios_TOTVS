@@ -14,7 +14,7 @@ page_list = list(pages.keys())
 
 def nav(current_page=page_list[0]):
 	with st.sidebar:
-		st.set_page_config(page_title="EchoShift", page_icon="iphone", layout="centered", initial_sidebar_state="auto",
+		st.set_page_config(page_title="EchoShift", page_icon="iphone", layout="wide", initial_sidebar_state="auto",
 		                   menu_items=None)
 
 		st.sidebar.image("Logologo.png", use_column_width=True)
