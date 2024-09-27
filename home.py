@@ -17,6 +17,8 @@ st.markdown("**EchoShift** é uma Solução automatizada para transcrição e an
 st.text("")
 st.text("")
 st.markdown("**Um pouco sobre o desenvolvimento:**")
+st.markdown("👨🏻‍💻 O código da página em python e notebooks jupyter desenvolvidos para treinamento de um modelo estão disponibilizados"
+            "no Github, que pode ser acessado por esse [link](https://github.com/lucas142129silva/Streamlit_e_transcricao_de_audios_TOTVS).")
 st.markdown("Utilizamos Notebooks do Kaggle para processamento dos códigos, pois eles possuem uma ferramenta de schedule diário e usam máquinas com GPU,  também fornecem 30h grátis semanais, gerando uma solução rápida, potente, sem custo e que atende a média de 80 áudios por dia.")
 st.markdown("Todos os códigos foram desenvolvidos pela nossa equipe, em python.")
 st.markdown("Após o tratamento e processamento dos dados, optamos por prototipar a solução com Streamlit. Essa ferramenta gratuita possibilita a execução de modelos de análise de sentimento, além de fornecer uma plataforma interativa para visualização dos resultados, unindo praticidade e eficiência no desenvolvimento e apresentação.")
